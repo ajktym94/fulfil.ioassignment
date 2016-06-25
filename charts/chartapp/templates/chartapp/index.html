@@ -1,0 +1,33 @@
+<html>
+  <head>
+     <meta charset="UTF-8"> 
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['geochart']});
+      google.charts.setOnLoadCallback(drawRegionsMap);
+
+      function drawRegionsMap() {
+
+
+	  
+        var datac =new google.visualization.DataTable([
+          ['Country','State','Reference'],
+          {%for r in response %}
+          [new {{r.country}},{{r.state}},{{r.reference}}],
+          {% endfor %}]
+          );
+        console.log(datac);
+        
+
+        var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+
+        chart.draw(datac,{width: 556, height: 347, region: "US",displayMode: 'regions', resolution: "provinces"});
+      }
+    </script>
+  </head>
+  <body>
+    <div id="regions_div" style="width: 900px; height: 500px;"></div>
+  </body>
+</html>
